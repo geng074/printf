@@ -6,11 +6,11 @@
 /*   By: giho <giho@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 16:22:56 by giho              #+#    #+#             */
-/*   Updated: 2025/05/22 17:55:22 by giho             ###   ########.fr       */
+/*   Updated: 2025/05/26 14:22:11 by giho             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "ft_printf.h"
 
 char	*ft_uitoa(unsigned int n)
 {
@@ -19,18 +19,13 @@ char	*ft_uitoa(unsigned int n)
 
 	buffer[10] = '\0';
 	i = 10;
-
 	if (n == 0)
 		buffer[--i] = '0';
-
 	while (n > 0)
 	{
 		i--;
 		buffer[i] = (n % 10) + '0';
 		n = n / 10;
-		
 	}
-
 	return (ft_strdup(&buffer[i]));
-	
 }
