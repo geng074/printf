@@ -1,31 +1,37 @@
 NAME = libftprintf.a
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror
 CPPFLAGS = -Ilibft
-SRC     = $(filter-out main.c, $(wildcard *.c))
+SRC     = ft_arg1.c  ft_arg2.c  \
+		ft_hex.c  ft_printf.c ft_uitoa.c
 OBJ = $(SRC:.c=.o)
-HEADER = libft/libft.h
-LIBFT_SRC = $(wildcard libft/*.c)
-LIBFT_OBJ = $(LIBFT_SRC:.c=.o)
+
+LIBFT_DIR = libft
+LIBFT_A = $(LIBFT_DIR)/libft.a
 
 all : $(NAME)
 
-$(NAME):$(OBJ) $(LIBFT_OBJ)
-	ar rcs $@ $^
+$(NAME):$(OBJ) $(LIBFT_A)
+	cp $(LIBFT_A) $(NAME)
+	ar rcs -o $(NAME) $(OBJ)
+
+
+$(LIBFT_A):
+	$(MAKE) -C $(LIBFT_DIR)
 
 %.o: %.c
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJ) $(LIBFT_OBJ)
-
+	rm -f $(OBJ) 
+	$(MAKE) -C $(LIBFT_DIR) clean
+	
 fclean : clean	
-	rm -f $(NAME) test
+	rm -f $(NAME)
+	$(MAKE) -C $(LIBFT_DIR) fclean
+
 
 re: fclean all
 
-test : $(NAME) main.c
-	$(CC) $(CPPFLAGS) $(CFLAGS) main.c $(NAME) -o test
-
-.PHONY: all clean fclean re test
+.PHONY: all clean fclean re
 
